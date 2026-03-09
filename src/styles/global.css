@@ -1,0 +1,59 @@
+/* Importando a fonte Inter do Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+:root {
+  /* Cores */
+  --color-primary: #1F4842;
+  --color-secondary: #BCF39B;
+  --color-neutral: #ECF4E9;
+  --color-bg: #F8F8FF;
+  
+  /* Cores de Alerta */
+  --color-danger: #EF5350;
+  --color-warning: #FFC750;
+  --color-success: #66BB6A;
+
+  /* Textos */
+  --color-text-dark: #1F4842;
+  --color-text-light: #F8F8FF;
+
+  /* Bordas (Corner Radius) */
+  --radius-card: 10px;
+  --radius-login: 40px;
+  --radius-button: 100px;
+
+  /* Fontes */
+  --font-main: 'Inter', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font-main);
+}
+
+body {
+  background-color: var(--color-primary); /* O fundo por trás do card central parece ser o verde escuro */
+  color: var(--color-text-dark);
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Faz o body ocupar a tela toda para centralizar o card */
+}
+
+button {
+  cursor: pointer;
+  font-family: var(--font-main);
+  transition: opacity 0.2s;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-primary);
+}

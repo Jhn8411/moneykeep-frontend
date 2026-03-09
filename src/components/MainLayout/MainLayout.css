@@ -1,0 +1,11 @@
+.layout-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--color-bg); /* O fundo branco/gelo do sistema */
+}
+
+.layout-content {
+  flex: 1;
+  margin-left: 260px; /* Empurra o conteúdo para não ficar debaixo da Sidebar fixa */
+  padding: 40px;
+}

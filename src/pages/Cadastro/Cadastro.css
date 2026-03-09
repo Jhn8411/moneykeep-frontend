@@ -1,0 +1,52 @@
+.cadastro-container {
+  display: flex;
+  width: 900px;
+  height: 600px;
+  background-color: var(--color-bg);
+  border-radius: var(--radius-login);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+/* Lado Esquerdo (Banner Verde) */
+.cadastro-banner {
+  flex: 1;
+  background-color: var(--color-secondary);
+  /* Se tiver uma ilustração diferente para o cadastro, pode colocar aqui o background-image */
+}
+
+/* Lado Direito (Formulário) */
+.cadastro-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px;
+}
+
+.cadastro-content h1 {
+  font-size: 32px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 8px;
+  color: var(--color-primary);
+}
+
+.cadastro-content p {
+  text-align: center;
+  font-size: 14px;
+  color: var(--color-text-dark);
+  margin-bottom: 32px; /* Reduzi um pouco o espaçamento por ter 3 inputs */
+}
+
+/* A caixinha de erro vermelha */
+.error-message {
+  color: var(--color-danger);
+  background-color: #fde8e8;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+}

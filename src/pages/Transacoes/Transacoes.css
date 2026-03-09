@@ -1,0 +1,187 @@
+.transacoes-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.transacoes-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr; /* 2/3 para o formulário, 1/3 para o resumo */
+  gap: 24px;
+}
+
+/* --- Cartão do Formulário --- */
+.form-card {
+  background-color: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: var(--radius-card);
+  padding: 32px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.form-header {
+  margin-bottom: 24px;
+  border-bottom: 1px solid #E5E7EB;
+  padding-bottom: 16px;
+}
+
+.form-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 4px;
+}
+
+.form-header p {
+  font-size: 14px;
+  color: #6B7280;
+}
+
+/* Seletor Despesa / Ganho */
+.type-toggle {
+  display: flex;
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-primary);
+  border-radius: 100px;
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+.toggle-btn {
+  flex: 1;
+  padding: 10px 0;
+  text-align: center;
+  font-weight: 600;
+  font-size: 14px;
+  border: none;
+  background: transparent;
+  color: var(--color-primary);
+  transition: all 0.3s;
+}
+
+.toggle-btn.active-expense {
+  background-color: var(--color-danger);
+  color: #FFFFFF;
+}
+
+.toggle-btn.active-income {
+  background-color: var(--color-success);
+  color: #FFFFFF;
+}
+
+/* Inputs do Formulário */
+.form-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-dark);
+  margin-bottom: 8px;
+}
+
+.input-group input, 
+.input-group select {
+  height: 48px;
+  border: 1px solid #D1D5DB;
+  border-radius: 8px;
+  padding: 0 16px;
+  font-size: 16px;
+  background-color: var(--color-bg);
+  color: var(--color-text-dark);
+  outline: none;
+  font-family: var(--font-main);
+}
+
+.input-group input:focus, 
+.input-group select:focus {
+  border-color: var(--color-primary);
+}
+
+.input-amount {
+  font-size: 24px !important; /* Valor em destaque */
+  font-weight: 600;
+}
+
+.btn-submit {
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+  display: block;
+}
+
+/* --- Cartão de Resumo --- */
+.summary-side-card {
+  background-color: var(--color-neutral); /* Verde claro do Figma */
+  border-radius: var(--radius-card);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.summary-side-card h3 {
+  font-size: 18px;
+  color: var(--color-primary);
+  font-weight: 700;
+  border-bottom: 1px solid rgba(31, 72, 66, 0.1);
+  padding-bottom: 12px;
+}
+
+.summary-block span {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: 4px;
+}
+
+.summary-block strong {
+  font-size: 28px;
+  color: var(--color-primary);
+}
+
+.summary-block .income-value {
+  color: var(--color-success);
+}
+
+.summary-block .expense-value {
+  color: var(--color-danger);
+}
+
+/* --- Lembrete --- */
+.reminder-card {
+  background-color: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: var(--radius-card);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.reminder-card h3 {
+  font-size: 16px;
+  margin-bottom: 12px;
+  width: 100%;
+}
+
+.input-group select:disabled, 
+.input-group input:disabled {
+  background-color: #F3F4F6;
+  color: #9CA3AF;
+  cursor: not-allowed;
+  border-color: #E5E7EB;
+}
