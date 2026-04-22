@@ -1,64 +1,296 @@
+/* =============================================
+   CONFIGURAÇÕES — MoneyKeep (Figma-accurate)
+   ============================================= */
+
 .config-container {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  max-width: 800px; /* Não precisamos usar a tela toda para configurações */
+  gap: 0;
 }
 
+/* ── HEADER ── */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  padding: 20px 32px;
+  border-bottom: 2px solid #E5E7EB;
+  background-color: #FFFFFF;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.menu-toggle {
+  display: none;
+  color: var(--color-primary);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.page-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.user-name { color: var(--color-primary); font-weight: 600; }
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+/* ── CORPO ── */
+.config-body {
+  padding: 24px 32px 40px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* =============================================
+   SEÇÕES (cards brancos)
+   ============================================= */
 .config-section {
   background-color: #FFFFFF;
   border: 1px solid #E5E7EB;
-  border-radius: var(--radius-card);
-  padding: 32px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Título da seção — linha separada com borda embaixo */
+.config-section h2 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0;
+  padding: 20px 28px;
+  border-bottom: 1px solid #E5E7EB;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Corpo interno da seção */
+.config-section-body {
+  padding: 24px 28px 28px 28px;
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.config-section h2 {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--color-primary);
-  border-bottom: 1px solid #E5E7EB;
-  padding-bottom: 12px;
-  margin-bottom: 8px;
+/* ── Inputs ── */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
+.input-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.input-group input,
+.input-group select {
+  height: 48px;
+  border: 1px solid #D1D5DB;
+  border-radius: 10px;
+  padding: 0 16px;
+  font-size: 15px;
+  background-color: #F9FAFB;
+  color: var(--color-text-dark);
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+  border-color: var(--color-primary);
+  background-color: #FFFFFF;
+}
+
+.input-group input:disabled,
+.input-group select:disabled {
+  background-color: #E5E7EB;
+  color: #9CA3AF;
+  cursor: not-allowed;
+  border-color: #E5E7EB;
+}
+
+/* Campos lado a lado (Moeda + Idioma) */
 .config-row {
   display: flex;
-  gap: 16px;
+  gap: 20px;
 }
 
-/* --- Zona de Perigo --- */
+.config-row .input-group {
+  flex: 1;
+}
+
+/* Rodapé de ação — nota + botão alinhados à direita */
+.config-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.config-note {
+  font-size: 12px;
+  color: #6B7280;
+  margin: 0;
+}
+
+/* Botão primário — pill, verde escuro */
+.btn-primary {
+  height: 46px;
+  padding: 0 28px;
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+}
+
+.btn-primary:hover { opacity: 0.88; }
+
+/* ── ZONA DE PERIGO ── */
 .danger-zone {
-  border-color: #fca5a5; /* Borda vermelha clara */
-  background-color: #fef2f2; /* Fundo bem sutilmente vermelho */
+  border-color: #FECACA;
+  background-color: #FEF2F2;
 }
 
 .danger-zone h2 {
-  color: var(--color-danger);
-  border-bottom-color: #fca5a5;
+  color: #DC2626;
+  border-bottom-color: #FECACA;
+  background-color: #FEF2F2;
 }
 
 .danger-text {
   font-size: 14px;
-  color: #4B5563;
-  margin-bottom: 8px;
+  font-weight: 600;
+  color: #374151;
+  line-height: 1.55;
+  margin: 0;
 }
 
 .btn-danger {
-  background-color: var(--color-danger);
+  height: 46px;
+  padding: 0 28px;
+  background-color: #EF5350;
   color: #FFFFFF;
   border: none;
-  border-radius: var(--radius-button);
-  padding: 12px 24px;
-  font-weight: 600;
-  font-size: 14px;
-  width: fit-content;
-  transition: 0.2s;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  white-space: nowrap;
 }
 
-.btn-danger:hover {
-  background-color: #b91c1c;
+.btn-danger:hover { background-color: #C62828; }
+
+/* =============================================
+   TABLET  (≤ 1024px)
+   ============================================= */
+@media (max-width: 1024px) {
+
+  .page-header {
+    justify-content: center;
+    padding: 16px 20px;
+  }
+
+  .menu-toggle {
+    display: block;
+    position: absolute;
+    left: 20px;
+  }
+
+  .user-profile {
+    position: absolute;
+    right: 20px;
+  }
+
+  .user-name { display: none; }
+
+  .config-body {
+    padding: 16px 16px 32px 16px;
+  }
+}
+
+/* =============================================
+   MOBILE  (≤ 600px)
+   ============================================= */
+@media (max-width: 600px) {
+
+  .config-body {
+    padding: 12px 12px 24px 12px;
+  }
+
+  .config-section h2 {
+    padding: 16px 20px;
+    font-size: 16px;
+  }
+
+  .config-section-body {
+    padding: 20px 20px 24px 20px;
+  }
+
+  /* Moeda e Idioma empilham em coluna no mobile */
+  .config-row {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Botão ocupa largura toda no mobile */
+  .btn-primary,
+  .btn-danger {
+    width: 100%;
+    text-align: center;
+  }
+
+  .config-footer {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .config-note {
+    text-align: center;
+  }
 }

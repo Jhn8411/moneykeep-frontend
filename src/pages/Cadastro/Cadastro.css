@@ -1,52 +1,197 @@
+/* =============================================
+   CADASTRO — MoneyKeep (idêntico ao Login)
+   ============================================= */
+
+/* Fundo da página: verde escuro */
+.cadastro-page {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #1F4842;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 32px 16px;
+}
+
+/* Card central: split left (verde claro) + right (branco) */
 .cadastro-container {
   display: flex;
   width: 900px;
-  height: 600px;
-  background-color: var(--color-bg);
-  border-radius: var(--radius-login);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  max-width: 100%;
+  min-height: 550px;
+  background-color: #FFFFFF;
+  border-radius: 24px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
   overflow: hidden;
 }
 
-/* Lado Esquerdo (Banner Verde) */
+/* ── LADO ESQUERDO: banner verde-claro com a logo grande ── */
 .cadastro-banner {
   flex: 1;
-  background-color: var(--color-secondary);
-  /* Se tiver uma ilustração diferente para o cadastro, pode colocar aqui o background-image */
+  background-color: #BCF39B;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 300px;
+  padding: 40px;
 }
 
-/* Lado Direito (Formulário) */
+.banner-logo {
+  width: 65%;
+  min-width: 160px;
+  max-width: 260px;
+  object-fit: contain;
+}
+
+/* Logo pequena — só aparece no mobile/tablet */
+.mobile-logo {
+  display: none;
+  width: 80px;
+  margin: 0 auto 20px auto;
+}
+
+/* ── LADO DIREITO: formulário branco ── */
 .cadastro-content {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 60px;
+  padding: 48px 44px;
+  background-color: #FFFFFF;
 }
 
 .cadastro-content h1 {
-  font-size: 32px;
+  font-size: 30px;
   font-weight: 700;
   text-align: center;
-  margin-bottom: 8px;
-  color: var(--color-primary);
+  color: #1F4842;
+  margin: 0 0 10px 0;
+  line-height: 1.25;
 }
 
 .cadastro-content p {
   text-align: center;
-  font-size: 14px;
-  color: var(--color-text-dark);
-  margin-bottom: 32px; /* Reduzi um pouco o espaçamento por ter 3 inputs */
+  font-size: 15px;
+  color: #4B5563;
+  margin: 0 0 28px 0;
 }
 
-/* A caixinha de erro vermelha */
-.error-message {
-  color: var(--color-danger);
-  background-color: #fde8e8;
-  padding: 12px;
-  border-radius: 8px;
+/* ── INPUTS ── */
+.input-group {
+  display: flex;
+  flex-direction: column;
   margin-bottom: 20px;
+}
+
+.input-group label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 6px;
+}
+
+.input-group input {
+  height: 46px;
+  border: 1px solid #E5E7EB;
+  border-radius: 10px;
+  padding: 0 16px;
+  font-size: 15px;
+  background-color: #F9FAFB;
+  color: #111827;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input-group input:focus {
+  border-color: #1F4842;
+  background-color: #FFFFFF;
+}
+
+/* ── BOTÕES ── */
+.btn-primary,
+.btn-outline {
+  height: 48px;
+  width: 100%;
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s, background-color 0.2s;
+}
+
+.btn-primary {
+  background-color: #1F4842;
+  color: #FFFFFF;
+  border: none;
+  margin-top: 12px;
+  margin-bottom: 14px;
+}
+
+.btn-primary:hover { opacity: 0.88; }
+
+.btn-outline {
+  background-color: transparent;
+  color: #1F4842;
+  border: 2px solid #1F4842;
+  margin-bottom: 0;
+}
+
+.btn-outline:hover { background-color: #F0FFF4; }
+
+/* ── ERRO ── */
+.error-message {
+  color: #DC2626;
+  background-color: #FEE2E2;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 16px;
   text-align: center;
   font-size: 14px;
   font-weight: 600;
+}
+
+/* =============================================
+   TABLET  (≤ 900px)
+   ============================================= */
+@media (max-width: 900px) {
+
+  .cadastro-page {
+    background-color: #FFFFFF;
+    padding: 0;
+    align-items: flex-start;
+  }
+
+  .cadastro-container {
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .cadastro-banner { display: none; }
+
+  .mobile-logo { display: block; }
+
+  .cadastro-content {
+    padding: 48px 12%;
+    justify-content: center;
+    flex: 1;
+  }
+
+  .cadastro-content h1 { font-size: 28px; }
+}
+
+/* =============================================
+   CELULAR  (≤ 480px)
+   ============================================= */
+@media (max-width: 480px) {
+
+  .cadastro-content {
+    padding: 40px 24px;
+  }
+
+  .cadastro-content h1 { font-size: 26px; }
+
+  .mobile-logo { width: 68px; }
 }

@@ -1,187 +1,449 @@
+/* =============================================
+   TRANSAÇÕES — MoneyKeep (Figma-accurate)
+   ============================================= */
+
 .transacoes-container {
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
 
-.transacoes-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr; /* 2/3 para o formulário, 1/3 para o resumo */
+/* ── HEADER (reutiliza o padrão do Dashboard) ── */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  padding: 20px 32px;
+  margin: 0;
+  border-bottom: 2px solid #E5E7EB;
+  background-color: #FFFFFF;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.menu-toggle {
+  display: none;
+  color: var(--color-primary);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.page-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.user-name { color: var(--color-primary); font-weight: 600; }
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+/* ── PADDING DA ÁREA DE CONTEÚDO ── */
+.transacoes-body {
+  padding: 0 32px 32px 32px;
+  display: flex;
+  flex-direction: column;
   gap: 24px;
 }
 
-/* --- Cartão do Formulário --- */
+/* =============================================
+   GRID: formulário (2fr) + resumo (1fr)
+   ============================================= */
+.transacoes-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  align-items: stretch; /* ✅ ambos os cards com mesma altura */
+}
+
+/* =============================================
+   CARD DO FORMULÁRIO
+   ============================================= */
 .form-card {
   background-color: #FFFFFF;
   border: 1px solid #E5E7EB;
-  border-radius: var(--radius-card);
-  padding: 32px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
 }
 
 .form-header {
-  margin-bottom: 24px;
+  padding: 24px 32px 20px 32px;
   border-bottom: 1px solid #E5E7EB;
-  padding-bottom: 16px;
 }
 
 .form-header h2 {
   font-size: 20px;
   font-weight: 700;
   color: var(--color-primary);
-  margin-bottom: 4px;
+  margin: 0 0 4px 0;
 }
 
 .form-header p {
   font-size: 14px;
   color: #6B7280;
+  margin: 0;
 }
 
-/* Seletor Despesa / Ganho */
+.form-body {
+  padding: 36px 40px 44px 40px;
+}
+
+/* ── Toggle Despesa / Ganho ── */
 .type-toggle {
   display: flex;
-  background-color: var(--color-bg);
-  border: 1px solid var(--color-primary);
-  border-radius: 100px;
-  width: 100%;
-  max-width: 300px;
-  margin-bottom: 24px;
+  background-color: #F9FAFB;
+  border: 2px solid var(--color-primary);
+  border-radius: 999px;
+  width: fit-content;
+  min-width: 260px;
+  margin-bottom: 36px; /* ✅ mais respiro abaixo do toggle */
   overflow: hidden;
 }
 
 .toggle-btn {
   flex: 1;
-  padding: 10px 0;
+  padding: 10px 28px;
   text-align: center;
-  font-weight: 600;
-  font-size: 14px;
+  font-weight: 700;
+  font-size: 15px;
   border: none;
   background: transparent;
   color: var(--color-primary);
-  transition: all 0.3s;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+  border-radius: 999px;
 }
 
 .toggle-btn.active-expense {
-  background-color: var(--color-danger);
+  background-color: #EF5350;
   color: #FFFFFF;
 }
 
 .toggle-btn.active-income {
-  background-color: var(--color-success);
+  background-color: var(--color-primary);
   color: #FFFFFF;
 }
 
-/* Inputs do Formulário */
-.form-row {
-  display: flex;
-  gap: 16px;
-  margin-bottom: 20px;
-}
-
+/* ── Inputs ── */
 .input-group {
   display: flex;
   flex-direction: column;
   flex: 1;
-  margin-bottom: 20px;
+  margin-bottom: 28px; /* ✅ espaço generoso entre cada campo */
 }
 
 .input-group label {
   font-size: 14px;
   font-weight: 600;
-  color: var(--color-text-dark);
-  margin-bottom: 8px;
+  color: #374151;
+  margin-bottom: 12px; /* ✅ mais espaço entre label e campo */
 }
 
-.input-group input, 
+.input-group input,
 .input-group select {
-  height: 48px;
+  height: 52px; /* ✅ inputs um pouco mais altos */
   border: 1px solid #D1D5DB;
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 0 16px;
-  font-size: 16px;
-  background-color: var(--color-bg);
+  font-size: 15px;
+  background-color: #F9FAFB;
   color: var(--color-text-dark);
   outline: none;
-  font-family: var(--font-main);
+  font-family: inherit;
+  transition: border-color 0.2s;
 }
 
-.input-group input:focus, 
+.input-group input:focus,
 .input-group select:focus {
   border-color: var(--color-primary);
-}
-
-.input-amount {
-  font-size: 24px !important; /* Valor em destaque */
-  font-weight: 600;
-}
-
-.btn-submit {
-  width: 100%;
-  max-width: 300px;
-  margin: 0 auto;
-  display: block;
-}
-
-/* --- Cartão de Resumo --- */
-.summary-side-card {
-  background-color: var(--color-neutral); /* Verde claro do Figma */
-  border-radius: var(--radius-card);
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.summary-side-card h3 {
-  font-size: 18px;
-  color: var(--color-primary);
-  font-weight: 700;
-  border-bottom: 1px solid rgba(31, 72, 66, 0.1);
-  padding-bottom: 12px;
-}
-
-.summary-block span {
-  display: block;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--color-primary);
-  margin-bottom: 4px;
-}
-
-.summary-block strong {
-  font-size: 28px;
-  color: var(--color-primary);
-}
-
-.summary-block .income-value {
-  color: var(--color-success);
-}
-
-.summary-block .expense-value {
-  color: var(--color-danger);
-}
-
-/* --- Lembrete --- */
-.reminder-card {
   background-color: #FFFFFF;
-  border: 1px solid #E5E7EB;
-  border-radius: var(--radius-card);
-  padding: 20px;
+}
+
+/* Valor em destaque — maior */
+.input-amount {
+  font-size: 22px !important;
+  font-weight: 600;
+  color: #9CA3AF !important; /* cinza enquanto vazio, como no Figma */
+}
+
+.input-amount:focus,
+.input-amount:not(:placeholder-shown) {
+  color: var(--color-text-dark) !important;
+}
+
+/* Data + Categoria lado a lado */
+.form-row {
   display: flex;
-  align-items: center;
   gap: 16px;
+  margin-bottom: 0;
 }
 
-.reminder-card h3 {
-  font-size: 16px;
-  margin-bottom: 12px;
-  width: 100%;
+.form-row .input-group {
+  margin-bottom: 28px; /* ✅ consistente com os demais */
 }
 
-.input-group select:disabled, 
+/* Input de data com ícone de calendário (aparece nativamente no browser) */
+.input-group input[type="date"] {
+  cursor: pointer;
+}
+
+/* Select e input desabilitados */
+.input-group select:disabled,
 .input-group input:disabled {
   background-color: #F3F4F6;
   color: #9CA3AF;
   cursor: not-allowed;
   border-color: #E5E7EB;
+}
+
+/* Botão submit centralizado — pill, como no Figma */
+.btn-submit {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  margin: 20px auto 0 auto; /* ✅ mais espaço acima do botão */
+  height: 52px;
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-submit:hover {
+  opacity: 0.88;
+}
+
+/* =============================================
+   CARD DE RESUMO (lado direito)
+   ============================================= */
+.summary-side-card {
+  background: linear-gradient(180deg, #BCF39B 0%, #F8F8FF 100%); /* ✅ gradiente Figma */
+  border: 1px solid #E5E7EB;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  display: flex;
+  flex-direction: column;
+}
+
+.summary-side-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0;
+  padding: 24px 28px 20px 28px;
+  border-bottom: 1px solid rgba(31,72,66,0.15);
+}
+
+.summary-block {
+  padding: 32px 28px; /* ✅ espaçamento generoso para igualar altura */
+  border-bottom: 1px solid rgba(31,72,66,0.08);
+  flex: 1; /* ✅ distribui o espaço igualmente entre os 3 blocos */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.summary-block:last-child {
+  border-bottom: none;
+}
+
+.summary-block span {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: 8px;
+}
+
+.summary-block strong {
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1.1;
+}
+
+.income-value { color: #16A34A !important; }
+.expense-value { color: #DC2626 !important; }
+
+/* =============================================
+   LEMBRETE
+   ============================================= */
+.reminder-section h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0 0 12px 0;
+}
+
+.reminder-card {
+  background-color: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 14px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.reminder-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 44px;
+  height: 44px;
+  background-color: var(--color-success);
+  border-radius: 10px;
+  color: #FFFFFF;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.reminder-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-primary);
+  line-height: 1.5;
+}
+
+/* =============================================
+   TABLET  (≤ 1024px)
+   ============================================= */
+@media (max-width: 1024px) {
+
+  .page-header {
+    justify-content: center;
+    padding: 16px 20px;
+  }
+
+  .menu-toggle {
+    display: block;
+    position: absolute;
+    left: 20px;
+  }
+
+  .user-profile {
+    position: absolute;
+    right: 20px;
+  }
+
+  .user-name { display: none; }
+
+  .transacoes-body {
+    padding: 0 16px 24px 16px;
+  }
+
+  /* Formulário em cima, resumo embaixo em linha */
+  .transacoes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Resumo vira 3 colunas lado a lado no tablet */
+  .summary-side-card {
+    display: grid;
+    grid-template-columns: auto 1fr 1fr; /* Título | Ganhos | Despesas */
+  }
+
+  .summary-side-card h3 {
+    grid-column: 1 / -1; /* Título ocupa a linha toda */
+    border-bottom: 1px solid rgba(31,72,66,0.15);
+  }
+
+  .summary-block {
+    border-bottom: none;
+    border-right: 1px solid rgba(31,72,66,0.10);
+  }
+
+  .summary-block:last-child {
+    border-right: none;
+  }
+}
+
+/* =============================================
+   CELULAR  (≤ 600px)
+   ============================================= */
+@media (max-width: 600px) {
+
+  .transacoes-body {
+    padding: 0 12px 20px 12px;
+  }
+
+  .form-header,
+  .form-body {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  /* No mobile a data e categoria ficam em coluna */
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* Resumo mobile: Saldo em cima ocupando tudo, Ganhos+Despesas embaixo em 2 colunas */
+  .summary-side-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .summary-side-card h3 {
+    grid-column: 1 / -1;
+  }
+
+  /* Saldo atual ocupa linha inteira */
+  .summary-block:first-of-type {
+    grid-column: 1 / -1;
+    border-bottom: 1px solid rgba(31,72,66,0.10);
+    border-right: none;
+  }
+
+  .summary-block {
+    border-right: 1px solid rgba(31,72,66,0.10);
+    border-bottom: none;
+  }
+
+  .summary-block:last-child {
+    border-right: none;
+  }
+
+  .summary-block strong {
+    font-size: 24px;
+  }
+
+  .type-toggle {
+    width: 100%;
+    min-width: unset;
+  }
 }

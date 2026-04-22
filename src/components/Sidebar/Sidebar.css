@@ -9,6 +9,7 @@
   left: 0;
   top: 0;
   border-right: 1px solid #E5E7EB; /* Uma linha suave para separar do conteúdo */
+  z-index: 100; /* Garante que o menu fique sempre por cima de tudo */
 }
 
 /* Área do Logo */
@@ -69,9 +70,67 @@
   font-size: 16px;
   font-weight: 600;
   transition: 0.2s;
+  cursor: pointer;
 }
 
 .btn-logout:hover {
   background-color: var(--color-primary);
   color: var(--color-text-light);
+}
+
+/* =========================================
+   RESPONSIVIDADE DO MENU (Laptops até 1024px)
+   ========================================= */
+@media (max-width: 1024px) {
+  .sidebar-container {
+    width: 200px; /* Menu mais fino */
+    padding: 32px 0; /* Diminui um pouco o espaço no topo e embaixo */
+  }
+
+  .sidebar-logo {
+    padding: 0 20px;
+    font-size: 20px; /* Logo um pouco menor para caber bem */
+    margin-bottom: 32px;
+  }
+
+  .nav-item {
+    padding: 12px 20px; /* Reduz o espaçamento interno do botão */
+    gap: 12px; /* Aproxima o ícone do texto */
+    margin-right: 16px; /* Ajusta a borda arredondada */
+    font-size: 14px; /* Texto levemente menor */
+  }
+
+  .sidebar-footer {
+    padding: 0 20px;
+  }
+
+  .btn-logout {
+    height: 40px;
+    font-size: 14px;
+  }
+
+  .sidebar-container {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  /* O Dashboard agora ocupa 100% da tela */
+  .layout-content {
+    margin-left: 0 !important; 
+    padding: 24px;
+  }
+
+@media (max-width: 1024px) {
+  /* Esconde o menu fora da tela na esquerda (-100%) por padrão */
+  .sidebar-container {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000; /* Fica acima da película escura */
+  }
+
+  /* Quando a classe .open entra, ele desliza para a tela (0) */
+  .sidebar-container.open {
+    transform: translateX(0);
+  }
+}
 }

@@ -1,11 +1,55 @@
-.layout-container {
-  display: flex;
-  min-height: 100vh;
-  background-color: var(--color-bg); /* O fundo branco/gelo do sistema */
+/* Isso impede que paddings e borders aumentem o tamanho final das caixas */
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
+/* Base global */
+#root, body, html {
+  max-width: 100% !important;
+  width: 100%;
+  min-height: 100vh;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  /* ✅ REMOVIDO background-color daqui — quem define a cor é o layout-content */
+}
+
+/* =============================================
+   ÁREA DE CONTEÚDO PRINCIPAL
+   ============================================= */
 .layout-content {
   flex: 1;
-  margin-left: 260px; /* Empurra o conteúdo para não ficar debaixo da Sidebar fixa */
-  padding: 40px;
+  margin-left: 260px;        /* Empurra para fora da sidebar fixa */
+  padding: 0;                /* ✅ SEM padding aqui — cada página define o seu */
+  min-height: 100vh;
+  background-color: #F0FFF4; /* ✅ Fundo verde preenchendo TUDO */
+  width: calc(100% - 260px); /* ✅ Garante que ocupe exatamente o espaço restante */
+}
+
+/* --- A Película Escura (Overlay) --- */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* =============================================
+   RESPONSIVIDADE (≤ 1024px)
+   ============================================= */
+@media (max-width: 1024px) {
+
+  .sidebar-overlay.active {
+    display: block;
+    opacity: 1;
+  }
+
+  .layout-content {
+    margin-left: 0 !important;
+    width: 100%;              /* ✅ Ocupa tela toda quando a sidebar está escondida */
+  }
 }

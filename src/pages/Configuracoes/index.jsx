@@ -1,104 +1,160 @@
 import React, { useState } from 'react';
-import { FiUser, FiLock, FiGlobe } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
+import { useOutletContext } from 'react-router-dom';
+import { FiUser, FiLock, FiGlobe, FiMenu } from 'react-icons/fi';
+import { FiUser as FiUserAvatar } from 'react-icons/fi';
+import api from '../../services/api';
 import './Configuracoes.css';
 
 const Configuracoes = () => {
-  // Pega os dados do usuário que guardamos no momento do login
-  const user = JSON.parse(localStorage.getItem('@MoneyKeep:user') || '{}');
+  const navigate   = useNavigate();
+  const { toggleMenu } = useOutletContext();
 
-  const [name, setName] = useState(user.name || '');
+  const user  = JSON.parse(localStorage.getItem('@MoneyKeep:user') || '{}');
+  const token = localStorage.getItem('@MoneyKeep:token');
+
+  const [name, setName]   = useState(user.name  || '');
   const [email, setEmail] = useState(user.email || '');
 
-  const handleSaveProfile = (e) => {
+  const handleSaveProfile = async (e) => {
     e.preventDefault();
-    // No TCC, você pode apenas mostrar um alerta fingindo que salvou, 
-    // ou futuramente criar uma rota PUT /users no backend para atualizar de verdade.
-    alert('Perfil atualizado com sucesso! (Simulação)');
+    try {
+      const response = await api.put(
+        '/users',
+        { name },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      const updatedUser = { ...user, name: response.data.name };
+      localStorage.setItem('@MoneyKeep:user', JSON.stringify(updatedUser));
+      alert('Perfil atualizado com sucesso!');
+      window.location.reload();
+    } catch (error) {
+      console.error('Erro ao atualizar perfil:', error);
+      alert('Ocorreu um erro ao atualizar o seu perfil.');
+    }
   };
 
-  const handleDeleteAccount = () => {
-    const confirm = window.confirm("Tem certeza absoluta? Todos os seus dados financeiros serão perdidos para sempre.");
-    if (confirm) {
-      alert("Para o escopo deste TCC, a exclusão foi simulada.");
+  const handleDeleteAccount = async () => {
+    const confirmed = window.confirm(
+      'Tem certeza absoluta? Todos os seus dados financeiros serão perdidos para sempre.'
+    );
+    if (!confirmed) return;
+
+    try {
+      await api.delete('/users', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      localStorage.removeItem('@MoneyKeep:token');
+      localStorage.removeItem('@MoneyKeep:user');
+      alert('Sua conta foi excluída com sucesso. Sentiremos sua falta!');
+      navigate('/');
+    } catch (error) {
+      console.error('Erro ao excluir conta:', error);
+      alert('Ocorreu um erro ao excluir sua conta.');
     }
   };
 
   return (
     <div className="config-container">
-      
+
+      {/* ── HEADER ── */}
       <header className="page-header">
-        <h1 className="page-title">Configurações</h1>
-        <p style={{ color: '#6B7280', marginTop: '4px' }}>
-          Gerencie os detalhes da sua conta e preferências do sistema.
-        </p>
+        <div className="header-left">
+          <FiMenu className="menu-toggle" size={26} onClick={toggleMenu} />
+          <h1 className="page-title">Configurações</h1>
+        </div>
+        <div className="user-profile">
+          <span className="user-name">{user.name || 'Usuário'}</span>
+          <div className="user-avatar"><FiUserAvatar /></div>
+        </div>
       </header>
 
-      {/* --- Seção 1: Perfil --- */}
-      <section className="config-section">
-        <h2><FiUser style={{ marginRight: '8px' }} /> Perfil do Usuário</h2>
-        
-        <form onSubmit={handleSaveProfile} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          <div className="input-group">
-            <label>Nome Completo</label>
-            <input 
-              type="text" 
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
+      <div className="config-body">
+
+        {/* ── Seção 1: Perfil ── */}
+        <section className="config-section">
+          <h2><FiUser size={18} /> Perfil do Usuário</h2>
+
+          <div className="config-section-body">
+            <form onSubmit={handleSaveProfile} style={{ display: 'contents' }}>
+
+              <div className="input-group">
+                <label>Nome Completo</label>
+                <input
+                  type="text"
+                  placeholder="Seu nome"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div className="input-group">
+                <label>E-mail de Acesso</label>
+                <input
+                  type="email"
+                  placeholder="Seu E-mail"
+                  value={email}
+                  disabled
+                />
+              </div>
+
+              <div className="config-footer">
+                <button type="submit" className="btn-primary">
+                  Salvar Alterações
+                </button>
+              </div>
+
+            </form>
           </div>
+        </section>
 
-          <div className="input-group">
-            <label>E-mail de Acesso</label>
-            <input 
-              type="email" 
-              value={email}
-              disabled // E-mail geralmente não muda facilmente
-              style={{ backgroundColor: '#F3F4F6', color: '#9CA3AF' }}
-            />
+        {/* ── Seção 2: Preferências ── */}
+        <section className="config-section">
+          <h2><FiGlobe size={18} /> Preferencias do Sistema</h2>
+
+          <div className="config-section-body">
+
+            <div className="config-row">
+              <div className="input-group">
+                <label>Moeda Padrão</label>
+                <input type="text" value="Real Brasileiro (R$)" disabled />
+              </div>
+
+              <div className="input-group">
+                <label>Idioma</label>
+                <input type="text" value="Português (Brasil)" disabled />
+              </div>
+            </div>
+
+            <div className="config-footer">
+              <p className="config-note">*Opções fixas na versão atual do sistema</p>
+              <button type="button" className="btn-primary" disabled style={{ opacity: 0.45, cursor: 'not-allowed' }}>
+                Salvar Alterações
+              </button>
+            </div>
+
           </div>
+        </section>
 
-          <button type="submit" className="btn-primary" style={{ width: 'fit-content', padding: '0 32px' }}>
-            Salvar Alterações
-          </button>
-        </form>
-      </section>
+        {/* ── Seção 3: Zona de Perigo ── */}
+        <section className="config-section danger-zone">
+          <h2><FiLock size={18} /> Zona de Perigo</h2>
 
-      {/* --- Seção 2: Preferências --- */}
-      <section className="config-section">
-        <h2><FiGlobe style={{ marginRight: '8px' }} /> Preferências do Sistema</h2>
-        
-        <div className="config-row">
-          <div className="input-group">
-            <label>Moeda Padrão</label>
-            <select disabled>
-              <option value="BRL">Real Brasileiro (R$)</option>
-              <option value="USD">Dólar Americano ($)</option>
-              <option value="EUR">Euro (€)</option>
-            </select>
+          <div className="config-section-body">
+            <p className="danger-text">
+              Ao excluir a sua conta, voce perderá o acesso definitivo ao MoneyKeep e todo o seu historio de transações será apagado dos nossos servidores. Esta ação não pode ser desfeita
+            </p>
+
+            <div className="config-footer">
+              <button type="button" className="btn-danger" onClick={handleDeleteAccount}>
+                Excluir Minha Conta
+              </button>
+            </div>
           </div>
+        </section>
 
-          <div className="input-group">
-            <label>Idioma</label>
-            <select disabled>
-              <option value="PT">Português (Brasil)</option>
-              <option value="EN">English</option>
-            </select>
-          </div>
-        </div>
-        <p style={{ fontSize: '12px', color: '#6B7280' }}>* Opções fixas na versão atual do sistema.</p>
-      </section>
-
-      {/* --- Seção 3: Zona de Perigo --- */}
-      <section className="config-section danger-zone">
-        <h2><FiLock style={{ marginRight: '8px' }} /> Zona de Perigo</h2>
-        <p className="danger-text">
-          Ao excluir a sua conta, você perderá o acesso definitivo ao MoneyKeep e todo o seu histórico de transações será apagado dos nossos servidores. Esta ação não pode ser desfeita.
-        </p>
-        <button type="button" className="btn-danger" onClick={handleDeleteAccount}>
-          Excluir Minha Conta
-        </button>
-      </section>
-
+      </div>
     </div>
   );
 };

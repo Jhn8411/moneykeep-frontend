@@ -1,107 +1,198 @@
+/* =============================================
+   DASHBOARD.CSS — MoneyKeep (Figma-accurate)
+   ============================================= */
+
+/* --- Variáveis globais esperadas no :root do projeto --- */
+/* :root {
+  --color-primary: #1F4842;
+  --color-success: #66BB6A;
+  --color-danger:  #EF5350;
+  --color-warning: #FFC750;
+  --color-neutral: #BCF39B;
+  --color-text-light: #FFFFFF;
+  --color-text-dark:  #111827;
+} */
+
+/* --- Container Principal --- */
 .dashboard-container {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 24px;
+  width: 100%;
+  background-color: #F0FFF4; /* fundo levemente esverdeado igual ao Figma */
+  min-height: 100vh;
+  padding: 0 0 32px 0;
 }
 
-/* --- Cabeçalho da Página --- */
+/* =============================================
+   HEADER
+   ============================================= */
 .page-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
+  margin: 0;
+  padding: 20px 32px;
   border-bottom: 2px solid #E5E7EB;
-  padding-bottom: 16px;
+  background-color: #FFFFFF;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* O botão hambúrguer fica ESCONDIDO no desktop */
+.menu-toggle {
+  display: none;
+  color: var(--color-primary);
+  cursor: pointer;
+  flex-shrink: 0;
 }
 
 .page-title {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 700;
   color: var(--color-primary);
+  margin: 0;
 }
 
 .user-profile {
   display: flex;
   align-items: center;
   gap: 12px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--color-primary);
+}
+
+.user-name {
+  color: var(--color-primary);
+  font-weight: 600;
 }
 
 .user-avatar {
   width: 40px;
   height: 40px;
   background-color: var(--color-primary);
-  color: var(--color-text-light);
+  color: #FFFFFF;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 18px;
+  flex-shrink: 0;
 }
 
-/* --- Cards de Resumo --- */
+/* =============================================
+   ÁREA DE CONTEÚDO (padding lateral)
+   ============================================= */
+.grupo-total {
+  padding: 0 32px;
+}
+
+/* =============================================
+   LAYOUT MASTER — DUAS LINHAS (desktop)
+   ============================================= */
+.dashboard-top-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  align-items: stretch;
+}
+
+.dashboard-bottom-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  align-items: stretch;
+}
+
+.left-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.right-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* =============================================
+   CARDS DE RESUMO (Saldo / Ganhos / Despesas)
+   ============================================= */
 .summary-cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  gap: 16px;
 }
 
 .card {
   background-color: #FFFFFF;
   border: 1px solid #E5E7EB;
-  border-radius: var(--radius-card);
-  padding: 24px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  border-radius: 12px;
+  padding: 20px 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 110px;
 }
 
-/* O card principal (Saldo) usa a cor primária! */
+/* Card principal (Saldo Atual) — gradiente diagonal do Figma */
 .card.main {
-  background-color: var(--color-primary);
-  color: var(--color-text-light);
+  background: linear-gradient(135deg, #1F4842 0%, #00805D 100%);
+  color: #FFFFFF;
   border: none;
 }
 
 .card-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 16px;
+  gap: 8px;
+  font-size: 14px;
   font-weight: 600;
 }
 
-.card.main .card-header {
-  color: var(--color-text-light);
+.card-header span {
+  color: #6B7280;
 }
 
-.card-header span {
-  color: #6B7280; /* Um cinza para os subtítulos dos cards brancos */
+.card.main .card-header {
+  color: #FFFFFF;
 }
 
 .card.main .card-header span {
-  color: var(--color-neutral); /* Verde claro para o subtítulo no card escuro */
+  color: #BCF39B;
 }
 
 .card-value {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1.1;
 }
 
-/* --- Seção de Gráficos --- */
-.charts-section {
-  display: grid;
-  grid-template-columns: 2fr 1fr; /* 2 partes para o de barras, 1 parte para a rosca */
-  gap: 24px;
+.card.main .card-value {
+  color: #FFFFFF;
 }
 
-.chart-card {
+/* =============================================
+   BLOCOS BRANCOS GENÉRICOS (chart-card, table-card, suggestions-card)
+   ============================================= */
+.chart-card,
+.table-card,
+.suggestions-card {
   background-color: #FFFFFF;
   border: 1px solid #E5E7EB;
-  border-radius: var(--radius-card);
+  border-radius: 12px;
   padding: 24px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   display: flex;
   flex-direction: column;
 }
@@ -110,27 +201,53 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .chart-title {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 700;
   color: var(--color-primary);
+  margin: 0;
 }
 
 .chart-subtitle {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--color-primary);
 }
 
-/* --- Legenda Personalizada do Gráfico de Rosca --- */
+.empty-state {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  color: #9CA3AF;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* =============================================
+   GRÁFICO DE PIZZA (Divisão de Despesas)
+   ============================================= */
+.pie-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.pie-chart-container {
+  width: 100%;
+  height: 220px;
+  position: relative;
+}
+
 .custom-legend {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-top: 16px;
+  gap: 14px;
+  margin-top: 24px;
 }
 
 .legend-item {
@@ -142,23 +259,23 @@
 .legend-label-group {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
 }
 
 .legend-percentage {
-  background-color: var(--color-success);
-  color: #FFF;
-  font-size: 12px;
+  color: #FFFFFF;
+  font-size: 11px;
   font-weight: 700;
-  padding: 4px 8px;
-  border-radius: 100px;
-  min-width: 45px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  min-width: 42px;
   text-align: center;
+  line-height: 1.4;
 }
 
 .legend-name {
   font-size: 14px;
-  color: var(--color-primary);
+  color: #4B5563;
   font-weight: 500;
 }
 
@@ -168,72 +285,107 @@
   color: var(--color-primary);
 }
 
-/* --- Seção Inferior (Tabela e Sugestões) --- */
-.bottom-section {
-  display: grid;
-  grid-template-columns: 2fr 1fr; /* Mantemos a mesma proporção dos gráficos */
-  gap: 24px;
-  margin-top: 8px; /* Dá um pequeno respiro em relação aos gráficos */
+/* =============================================
+   SCROLL HORIZONTAL (gráfico de barras / tabela)
+   ============================================= */
+.scroll-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 4px;
 }
 
-/* --- Tabela de Transações Recentes --- */
+.scroll-inner-chart {
+  min-width: 520px;
+}
+
+.scroll-inner-table {
+  min-width: 580px;
+}
+
+.scroll-wrapper::-webkit-scrollbar {
+  height: 4px;
+}
+
+.scroll-wrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll-wrapper::-webkit-scrollbar-thumb {
+  background: #D1FAE5;
+  border-radius: 4px;
+}
+
+/* =============================================
+   TABELA DE TRANSAÇÕES RECENTES
+   ============================================= */
 .table-container {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 16px;
+}
+
+.table-container thead tr {
+  background-color: #DCFCE7;
 }
 
 .table-container th {
   text-align: left;
   padding: 12px 16px;
-  background-color: var(--color-secondary); /* Aquele verde clarinho do cabeçalho da tabela */
   color: var(--color-primary);
   font-weight: 600;
-  font-size: 14px;
+  font-size: 13px;
+  white-space: nowrap;
 }
 
 .table-container th:first-child {
-  border-top-left-radius: 8px;
+  border-radius: 8px 0 0 0;
 }
 
 .table-container th:last-child {
-  border-top-right-radius: 8px;
+  border-radius: 0 8px 0 0;
 }
 
 .table-container td {
-  padding: 16px;
-  border-bottom: 1px solid #E5E7EB;
+  padding: 14px 16px;
+  border-bottom: 1px solid #F3F4F6;
   font-size: 14px;
-  color: var(--color-text-dark);
+  color: #374151;
+  white-space: nowrap;
+}
+
+.table-container tbody tr:last-child td {
+  border-bottom: none;
 }
 
 .transaction-income {
   color: var(--color-success);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .transaction-expense {
   color: var(--color-danger);
-  font-weight: 600;
+  font-weight: 700;
 }
 
-/* --- Lista de Sugestões Rápidas --- */
+/* =============================================
+   SUGESTÕES RÁPIDAS
+   ============================================= */
 .suggestions-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-top: 16px;
+  flex: 1;
 }
 
 .suggestion-card {
   display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 16px;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
   background-color: #FFFFFF;
   border: 1px solid #E5E7EB;
-  border-radius: 8px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+  border-radius: 10px;
 }
 
 .suggestion-icon {
@@ -245,15 +397,181 @@
   border-radius: 8px;
   color: #FFFFFF;
   font-size: 16px;
+  flex-shrink: 0;
 }
 
 .icon-success { background-color: var(--color-success); }
 .icon-warning { background-color: var(--color-warning); }
-.icon-danger { background-color: var(--color-danger); }
+.icon-danger  { background-color: var(--color-danger);  }
 
 .suggestion-text {
   font-size: 14px;
   line-height: 1.4;
-  color: var(--color-primary);
+  color: #4B5563;
   font-weight: 500;
+}
+
+/* =============================================
+   TABLET & MOBILE  (≤ 1024px)
+   ============================================= */
+@media (max-width: 1024px) {
+
+  /* Header centralizado com menu hambúrguer e avatar nas pontas */
+  .page-header {
+    justify-content: center;
+    padding: 16px 20px;
+  }
+
+  .menu-toggle {
+    display: block;
+    position: absolute;
+    left: 20px;
+  }
+
+  .user-profile {
+    position: absolute;
+    right: 20px;
+  }
+
+  .user-name {
+    display: none;
+  }
+
+  /* Padding lateral menor */
+  .grupo-total {
+    padding: 0 16px;
+  }
+
+  /* Tudo vira coluna única */
+  .left-panel,
+  .right-panel {
+    display: contents;
+  }
+
+  .dashboard-top-row {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .dashboard-bottom-row {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Ordem: 1. Cards | 2. Pizza | 3. Barras | 4. Tabela | 5. Sugestões */
+  .area-cards       { order: 1; }
+  .area-pie         { order: 2; }
+  .area-bar         { order: 3; }
+  .area-table       { order: 4; }
+  .area-suggestions { order: 5; }
+
+  /* ✅ TABLET: cards lado a lado preenchendo a largura toda */
+  .summary-cards {
+    display: flex;
+    gap: 12px;
+    overflow-x: visible; /* sem scroll no tablet */
+    padding-bottom: 0;
+  }
+
+  .summary-cards .card {
+    flex: 1;           /* cada card preenche 1/3 da largura */
+    min-width: 0;      /* permite encolher abaixo de 260px */
+  }
+
+  .summary-cards::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Pizza — gráfico e legenda lado a lado */
+  .pie-body {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .pie-chart-container {
+    width: 50% !important;
+    flex-shrink: 0;
+  }
+
+  .custom-legend {
+    width: 50%;
+    margin-top: 0;
+    gap: 10px;
+  }
+
+  /* ✅ Scrollbars visíveis no mobile para pizza, barras e tabela */
+  .scroll-wrapper::-webkit-scrollbar {
+    height: 4px;
+    display: block;
+  }
+
+  .scroll-wrapper::-webkit-scrollbar-track {
+    background: #E5E7EB;
+    border-radius: 2px;
+  }
+
+  .scroll-wrapper::-webkit-scrollbar-thumb {
+    background-color: var(--color-primary);
+    border-radius: 2px;
+  }
+}
+
+/* =============================================
+   CELULAR PEQUENO  (≤ 600px)
+   ============================================= */
+@media (max-width: 600px) {
+
+  .grupo-total {
+    padding: 0 12px;
+  }
+
+  /* ✅ MOBILE: cards voltam a ser carrossel horizontal */
+  .summary-cards {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 6px;
+  }
+
+  .summary-cards .card {
+    min-width: 220px;
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+
+  /* ✅ Scrollbar visível e verde nos cards de summary */
+  .summary-cards::-webkit-scrollbar {
+    display: block;
+    height: 4px;
+  }
+
+  .summary-cards::-webkit-scrollbar-track {
+    background: #E5E7EB;
+    border-radius: 2px;
+  }
+
+  .summary-cards::-webkit-scrollbar-thumb {
+    background-color: var(--color-primary);
+    border-radius: 2px;
+  }
+
+  /* Pizza volta para coluna (tela estreita) */
+  .pie-body {
+    flex-direction: column;
+  }
+
+  .pie-chart-container,
+  .custom-legend {
+    width: 100% !important;
+  }
+
+  .custom-legend {
+    margin-top: 16px;
+  }
+
+  .card-value {
+    font-size: 24px;
+  }
 }

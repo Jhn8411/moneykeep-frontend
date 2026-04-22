@@ -1,80 +1,151 @@
+/* =============================================
+   RECOMENDAÇÕES — MoneyKeep (Figma-accurate)
+   ============================================= */
+
 .recomendacoes-container {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 0;
 }
 
-.recomendacoes-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); /* Cria um grid responsivo de cards */
-  gap: 24px;
-  margin-top: 16px;
+/* ── HEADER ── */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  padding: 20px 32px;
+  border-bottom: 2px solid #E5E7EB;
+  background-color: #FFFFFF;
 }
 
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.menu-toggle {
+  display: none;
+  color: var(--color-primary);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.page-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.user-name { color: var(--color-primary); font-weight: 600; }
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+/* ── CORPO ── */
+.recomendacoes-body {
+  padding: 24px 32px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* =============================================
+   CARD DE RECOMENDAÇÃO
+   — Título com border-bottom, depois ícone + texto
+   ============================================= */
 .recomendacao-card {
   background-color: #FFFFFF;
   border: 1px solid #E5E7EB;
-  border-radius: var(--radius-card);
-  padding: 24px;
-  display: flex;
-  gap: 16px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-  transition: transform 0.2s, box-shadow 0.2s;
+  border-radius: 14px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  overflow: hidden;
+  transition: box-shadow 0.2s;
 }
 
 .recomendacao-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
-/* Área do Ícone */
+/* Título do card — linha separada com borda embaixo */
+.rec-title-row {
+  padding: 18px 24px;
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.rec-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+/* Corpo do card — ícone + mensagem lado a lado */
+.rec-body {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 20px 24px;
+}
+
+/* Ícone quadrado arredondado */
 .rec-icon-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 48px;
-  height: 48px;
-  border-radius: 12px;
+  min-width: 44px;
+  height: 44px;
+  border-radius: 10px;
   color: #FFFFFF;
-  font-size: 24px;
+  font-size: 22px;
+  flex-shrink: 0;
 }
 
 .bg-success { background-color: var(--color-success); }
-.bg-warning { background-color: var(--color-warning); }
-.bg-danger { background-color: var(--color-danger); }
+.bg-warning  { background-color: var(--color-warning); }
+.bg-danger   { background-color: var(--color-danger);  }
 
-/* Área de Texto */
-.rec-content {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.rec-title {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--color-primary);
-}
-
+/* Mensagem */
 .rec-message {
   font-size: 14px;
-  color: #4B5563; /* Um cinza médio para leitura agradável */
-  line-height: 1.5;
+  color: #4B5563;
+  line-height: 1.55;
+  margin: 0;
 }
 
-/* Estado Vazio (Sem recomendações) */
+/* ── Estado vazio ── */
 .empty-state {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 60px 20px;
+  padding: 64px 24px;
   background-color: #FFFFFF;
   border: 1px dashed #D1D5DB;
-  border-radius: var(--radius-card);
+  border-radius: 14px;
   text-align: center;
   color: #6B7280;
-  margin-top: 24px;
 }
 
 .empty-state svg {
@@ -84,5 +155,63 @@
 
 .empty-state h3 {
   color: var(--color-primary);
-  margin-bottom: 8px;
+  font-size: 18px;
+  margin: 0 0 8px 0;
+}
+
+.empty-state p {
+  font-size: 14px;
+  max-width: 360px;
+  line-height: 1.5;
+}
+
+/* =============================================
+   TABLET  (≤ 1024px)
+   ============================================= */
+@media (max-width: 1024px) {
+
+  .page-header {
+    justify-content: center;
+    padding: 16px 20px;
+  }
+
+  .menu-toggle {
+    display: block;
+    position: absolute;
+    left: 20px;
+  }
+
+  .user-profile {
+    position: absolute;
+    right: 20px;
+  }
+
+  .user-name { display: none; }
+
+  .recomendacoes-body {
+    padding: 16px 16px 24px 16px;
+    gap: 16px;
+  }
+}
+
+/* =============================================
+   MOBILE  (≤ 480px)
+   ============================================= */
+@media (max-width: 480px) {
+
+  .recomendacoes-body {
+    padding: 12px 12px 20px 12px;
+  }
+
+  .rec-title-row {
+    padding: 16px 18px;
+  }
+
+  .rec-body {
+    padding: 16px 18px;
+  }
+
+  .rec-title {
+    font-size: 15px;
+  }
 }
