@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 import './Login.css';
 
-import logoImg from '../../assets/logo.svg';
+import logoImg from '../../assets/Logo.svg';
 
 const Login = () => {
   const [email, setEmail]       = useState('');

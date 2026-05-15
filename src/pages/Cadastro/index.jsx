@@ -4,7 +4,7 @@ import api from '../../services/api';
 import FeedbackModal from '../../components/FeedbackModal';
 import './Cadastro.css';
 
-import logoImg from '../../assets/logo.svg';
+import logoImg from '../../assets/Logo.svg';
 
 const Cadastro = () => {
   const [name, setName]         = useState('');
