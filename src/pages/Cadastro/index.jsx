@@ -21,7 +21,7 @@ const Cadastro = () => {
     setError('');
 
     try {
-      await api.post('/users/register', { name, email, password });
+      await api.post('/api/users/register', { name, email, password });
       setModal({
         isOpen: true,
         type: 'success',

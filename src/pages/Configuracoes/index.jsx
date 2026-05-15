@@ -33,7 +33,7 @@ const Configuracoes = () => {
     e.preventDefault();
     try {
       const response = await api.put(
-        '/users',
+        '/api/users',
         { name },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -73,7 +73,7 @@ const Configuracoes = () => {
   const handleConfirmDelete = async () => {
     closeModal();
     try {
-      await api.delete('/users', {
+      await api.delete('/api/users', {
         headers: { Authorization: `Bearer ${token}` },
       });
       localStorage.removeItem('@MoneyKeep:token');

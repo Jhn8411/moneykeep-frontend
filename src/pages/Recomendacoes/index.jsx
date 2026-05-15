@@ -19,7 +19,7 @@ const Recomendacoes = () => {
   useEffect(() => {
     const fetchRecommendations = async () => {
       try {
-        const response = await api.get('/recommendations');
+        const response = await api.get('/api/recommendations');
         setRecommendations(response.data);
       } catch (error) {
         console.error('Erro ao buscar recomendações:', error);

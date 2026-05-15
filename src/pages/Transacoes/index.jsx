@@ -26,8 +26,8 @@ const Transacoes = () => {
   const fetchData = async () => {
     try {
       const [catRes, sumRes] = await Promise.all([
-        api.get('/categories'),
-        api.get('/dashboard/summary'),
+        api.get('/api/categories'),
+        api.get('/api/dashboard/summary'),
       ]);
       setCategories(catRes.data);
       setSummary(sumRes.data);
@@ -63,7 +63,7 @@ const Transacoes = () => {
     // O dia de vencimento é extraído da data pelo backend
 
     try {
-      await api.post('/transactions', {
+      await api.post('/api/transactions', {
         type,
         amount: parseFloat(amount),
         transaction_date: date,

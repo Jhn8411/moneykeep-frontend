@@ -31,11 +31,11 @@ const Dashboard = () => {
     const fetchDashboardData = async () => {
       try {
         const [summaryRes, annualRes, categoryRes, transRes, recRes] = await Promise.all([
-          api.get('/dashboard/summary'),
-          api.get('/dashboard/annual-overview'),
-          api.get('/dashboard/expenses-by-category'),
-          api.get('/transactions'),
-          api.get('/recommendations'),
+          api.get('/api/dashboard/summary'),
+          api.get('/api/dashboard/annual-overview'),
+          api.get('/api/dashboard/expenses-by-category'),
+          api.get('/api/transactions'),
+          api.get('/api/recommendations'),
         ]);
         setSummary(summaryRes.data);
         setAnnualData(annualRes.data);

@@ -57,8 +57,8 @@ const Recorrentes = () => {
   const fetchData = async () => {
     try {
       const [recRes, catRes] = await Promise.all([
-        api.get('/recurring'),
-        api.get('/categories'),
+        api.get('/api/recurring'),
+        api.get('/api/categories'),
       ]);
       setItems(recRes.data);
       setCategories(catRes.data);
@@ -109,7 +109,7 @@ const Recorrentes = () => {
     }
 
     try {
-      await api.put(`/recurring/${editingId}`, form);
+      await api.put(`/api/recurring/${editingId}`, form);
       setModal({ isOpen: true, type: 'success', title: 'Despesa atualizada!', message: 'As alterações foram salvas com sucesso.', mode: 'feedback' });
       setForm(EMPTY_FORM);
       setEditingId(null);
@@ -134,7 +134,7 @@ const Recorrentes = () => {
   const executeDelete = async (id) => {
     closeModal();
     try {
-      await api.delete(`/recurring/${id}`);
+      await api.delete(`/api/recurring/${id}`);
       fetchData();
     } catch {
       setModal({ isOpen: true, type: 'error', title: 'Erro ao excluir', message: 'Não foi possível remover a despesa. Tente novamente.', mode: 'feedback' });
