@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:3000/api', // A URL do seu backend!
+  baseURL: 'https://moneykeep-api-tcc.onrender.com', // A URL do seu backend!
 });
 
 // Este interceptador é mágico: ele pega o Token do localStorage 
