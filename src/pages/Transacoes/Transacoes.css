@@ -1,5 +1,5 @@
 /* =============================================
-   TRANSAÇÕES — MoneyKeep (Figma-accurate)
+   TRANSAÇÕES — MoneyKeep
    ============================================= */
 
 .transacoes-container {
@@ -8,7 +8,7 @@
   gap: 24px;
 }
 
-/* ── HEADER (reutiliza o padrão do Dashboard) ── */
+/* ── HEADER ── */
 .page-header {
   display: flex;
   justify-content: space-between;
@@ -20,11 +20,7 @@
   background-color: #FFFFFF;
 }
 
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
+.header-left { display: flex; align-items: center; gap: 16px; }
 
 .menu-toggle {
   display: none;
@@ -64,7 +60,7 @@
   flex-shrink: 0;
 }
 
-/* ── PADDING DA ÁREA DE CONTEÚDO ── */
+/* ── CORPO ── */
 .transacoes-body {
   padding: 0 32px 32px 32px;
   display: flex;
@@ -72,19 +68,14 @@
   gap: 24px;
 }
 
-/* =============================================
-   GRID: formulário (2fr) + resumo (1fr)
-   ============================================= */
 .transacoes-grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 24px;
-  align-items: stretch; /* ✅ ambos os cards com mesma altura */
+  align-items: stretch;
 }
 
-/* =============================================
-   CARD DO FORMULÁRIO
-   ============================================= */
+/* ── FORMULÁRIO ── */
 .form-card {
   background-color: #FFFFFF;
   border: 1px solid #E5E7EB;
@@ -105,17 +96,11 @@
   margin: 0 0 4px 0;
 }
 
-.form-header p {
-  font-size: 14px;
-  color: #6B7280;
-  margin: 0;
-}
+.form-header p { font-size: 14px; color: #6B7280; margin: 0; }
 
-.form-body {
-  padding: 36px 40px 44px 40px;
-}
+.form-body { padding: 36px 40px 44px 40px; }
 
-/* ── Toggle Despesa / Ganho ── */
+/* Toggle Despesa / Ganho */
 .type-toggle {
   display: flex;
   background-color: #F9FAFB;
@@ -123,7 +108,7 @@
   border-radius: 999px;
   width: fit-content;
   min-width: 260px;
-  margin-bottom: 36px; /* ✅ mais respiro abaixo do toggle */
+  margin-bottom: 36px;
   overflow: hidden;
 }
 
@@ -141,34 +126,27 @@
   border-radius: 999px;
 }
 
-.toggle-btn.active-expense {
-  background-color: #EF5350;
-  color: #FFFFFF;
-}
+.toggle-btn.active-expense { background-color: #EF5350; color: #FFFFFF; }
+.toggle-btn.active-income  { background-color: var(--color-primary); color: #FFFFFF; }
 
-.toggle-btn.active-income {
-  background-color: var(--color-primary);
-  color: #FFFFFF;
-}
-
-/* ── Inputs ── */
+/* Inputs */
 .input-group {
   display: flex;
   flex-direction: column;
   flex: 1;
-  margin-bottom: 28px; /* ✅ espaço generoso entre cada campo */
+  margin-bottom: 28px;
 }
 
 .input-group label {
   font-size: 14px;
   font-weight: 600;
   color: #374151;
-  margin-bottom: 12px; /* ✅ mais espaço entre label e campo */
+  margin-bottom: 12px;
 }
 
 .input-group input,
 .input-group select {
-  height: 52px; /* ✅ inputs um pouco mais altos */
+  height: 52px;
   border: 1px solid #D1D5DB;
   border-radius: 10px;
   padding: 0 16px;
@@ -186,11 +164,10 @@
   background-color: #FFFFFF;
 }
 
-/* Valor em destaque — maior */
 .input-amount {
   font-size: 22px !important;
   font-weight: 600;
-  color: #9CA3AF !important; /* cinza enquanto vazio, como no Figma */
+  color: #9CA3AF !important;
 }
 
 .input-amount:focus,
@@ -198,23 +175,11 @@
   color: var(--color-text-dark) !important;
 }
 
-/* Data + Categoria lado a lado */
-.form-row {
-  display: flex;
-  gap: 16px;
-  margin-bottom: 0;
-}
+.form-row { display: flex; gap: 16px; margin-bottom: 0; }
+.form-row .input-group { margin-bottom: 28px; }
 
-.form-row .input-group {
-  margin-bottom: 28px; /* ✅ consistente com os demais */
-}
+.input-group input[type="date"] { cursor: pointer; }
 
-/* Input de data com ícone de calendário (aparece nativamente no browser) */
-.input-group input[type="date"] {
-  cursor: pointer;
-}
-
-/* Select e input desabilitados */
 .input-group select:disabled,
 .input-group input:disabled {
   background-color: #F3F4F6;
@@ -223,12 +188,78 @@
   border-color: #E5E7EB;
 }
 
-/* Botão submit centralizado — pill, como no Figma */
+/* =============================================
+   PILL DE RECORRÊNCIA MENSAL
+   ============================================= */
+.recurring-pill-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+/* O pill em si */
+.recurring-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 38px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 1.5px solid #D1D5DB;
+  background-color: #F9FAFB;
+  color: #6B7280;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s, color 0.2s;
+  width: fit-content;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.recurring-pill:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background-color: #F0FFF4;
+}
+
+/* Ativo: fundo verde escuro */
+.recurring-pill--active {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+}
+
+.recurring-pill--active:hover {
+  opacity: 0.88;
+  color: #FFFFFF;
+}
+
+/* Dica abaixo do pill */
+.recurring-hint {
+  font-size: 12px;
+  color: var(--color-primary);
+  font-weight: 600;
+  padding-left: 4px;
+  animation: fadeIn 0.2s ease;
+}
+
+.recurring-hint--warn {
+  color: #D97706;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Botão submit ── */
 .btn-submit {
   display: block;
   width: 100%;
   max-width: 320px;
-  margin: 20px auto 0 auto; /* ✅ mais espaço acima do botão */
+  margin: 20px auto 0 auto;
   height: 52px;
   background-color: var(--color-primary);
   color: #FFFFFF;
@@ -240,15 +271,13 @@
   transition: opacity 0.2s;
 }
 
-.btn-submit:hover {
-  opacity: 0.88;
-}
+.btn-submit:hover { opacity: 0.88; }
 
 /* =============================================
-   CARD DE RESUMO (lado direito)
+   RESUMO
    ============================================= */
 .summary-side-card {
-  background: linear-gradient(180deg, #BCF39B 0%, #F8F8FF 100%); /* ✅ gradiente Figma */
+  background: linear-gradient(180deg, #BCF39B 0%, #F8F8FF 100%);
   border: 1px solid #E5E7EB;
   border-radius: 16px;
   overflow: hidden;
@@ -267,17 +296,15 @@
 }
 
 .summary-block {
-  padding: 32px 28px; /* ✅ espaçamento generoso para igualar altura */
+  padding: 32px 28px;
   border-bottom: 1px solid rgba(31,72,66,0.08);
-  flex: 1; /* ✅ distribui o espaço igualmente entre os 3 blocos */
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.summary-block:last-child {
-  border-bottom: none;
-}
+.summary-block:last-child { border-bottom: none; }
 
 .summary-block span {
   display: block;
@@ -294,7 +321,7 @@
   line-height: 1.1;
 }
 
-.income-value { color: #16A34A !important; }
+.income-value  { color: #16A34A !important; }
 .expense-value { color: #DC2626 !important; }
 
 /* =============================================
@@ -327,7 +354,6 @@
   background-color: var(--color-success);
   border-radius: 10px;
   color: #FFFFFF;
-  font-size: 20px;
   flex-shrink: 0;
 }
 
@@ -339,111 +365,39 @@
 }
 
 /* =============================================
-   TABLET  (≤ 1024px)
+   TABLET (≤ 1024px)
    ============================================= */
 @media (max-width: 1024px) {
-
-  .page-header {
-    justify-content: center;
-    padding: 16px 20px;
-  }
-
-  .menu-toggle {
-    display: block;
-    position: absolute;
-    left: 20px;
-  }
-
-  .user-profile {
-    position: absolute;
-    right: 20px;
-  }
-
+  .page-header { justify-content: center; padding: 16px 20px; }
+  .menu-toggle { display: block; position: absolute; left: 20px; }
+  .user-profile { position: absolute; right: 20px; }
   .user-name { display: none; }
+  .transacoes-body { padding: 0 16px 24px 16px; }
+  .transacoes-grid { grid-template-columns: 1fr; }
 
-  .transacoes-body {
-    padding: 0 16px 24px 16px;
-  }
-
-  /* Formulário em cima, resumo embaixo em linha */
-  .transacoes-grid {
-    grid-template-columns: 1fr;
-  }
-
-  /* Resumo vira 3 colunas lado a lado no tablet */
-  .summary-side-card {
-    display: grid;
-    grid-template-columns: auto 1fr 1fr; /* Título | Ganhos | Despesas */
-  }
-
-  .summary-side-card h3 {
-    grid-column: 1 / -1; /* Título ocupa a linha toda */
-    border-bottom: 1px solid rgba(31,72,66,0.15);
-  }
-
-  .summary-block {
-    border-bottom: none;
-    border-right: 1px solid rgba(31,72,66,0.10);
-  }
-
-  .summary-block:last-child {
-    border-right: none;
-  }
+  .summary-side-card { display: grid; grid-template-columns: auto 1fr 1fr; }
+  .summary-side-card h3 { grid-column: 1 / -1; border-bottom: 1px solid rgba(31,72,66,0.15); }
+  .summary-block { border-bottom: none; border-right: 1px solid rgba(31,72,66,0.10); }
+  .summary-block:last-child { border-right: none; }
 }
 
 /* =============================================
-   CELULAR  (≤ 600px)
+   CELULAR (≤ 600px)
    ============================================= */
 @media (max-width: 600px) {
+  .transacoes-body { padding: 0 12px 20px 12px; }
+  .form-header, .form-body { padding-left: 20px; padding-right: 20px; }
+  .form-row { flex-direction: column; gap: 0; }
 
-  .transacoes-body {
-    padding: 0 12px 20px 12px;
-  }
-
-  .form-header,
-  .form-body {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-
-  /* No mobile a data e categoria ficam em coluna */
-  .form-row {
-    flex-direction: column;
-    gap: 0;
-  }
-
-  /* Resumo mobile: Saldo em cima ocupando tudo, Ganhos+Despesas embaixo em 2 colunas */
-  .summary-side-card {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .summary-side-card h3 {
-    grid-column: 1 / -1;
-  }
-
-  /* Saldo atual ocupa linha inteira */
+  .summary-side-card { display: grid; grid-template-columns: 1fr 1fr; }
+  .summary-side-card h3 { grid-column: 1 / -1; }
   .summary-block:first-of-type {
     grid-column: 1 / -1;
     border-bottom: 1px solid rgba(31,72,66,0.10);
     border-right: none;
   }
-
-  .summary-block {
-    border-right: 1px solid rgba(31,72,66,0.10);
-    border-bottom: none;
-  }
-
-  .summary-block:last-child {
-    border-right: none;
-  }
-
-  .summary-block strong {
-    font-size: 24px;
-  }
-
-  .type-toggle {
-    width: 100%;
-    min-width: unset;
-  }
+  .summary-block { border-right: 1px solid rgba(31,72,66,0.10); border-bottom: none; }
+  .summary-block:last-child { border-right: none; }
+  .summary-block strong { font-size: 24px; }
+  .type-toggle { width: 100%; min-width: unset; }
 }

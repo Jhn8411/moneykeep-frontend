@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
+import FeedbackModal from '../../components/FeedbackModal';
 import './Cadastro.css';
 
 import logoImg from '../../assets/logo.svg';
@@ -11,6 +12,8 @@ const Cadastro = () => {
   const [password, setPassword] = useState('');
   const [error, setError]       = useState('');
 
+  const [modal, setModal] = useState({ isOpen: false, type: 'success', title: '', message: '' });
+
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
@@ -19,14 +22,31 @@ const Cadastro = () => {
 
     try {
       await api.post('/users/register', { name, email, password });
-      alert('Conta criada com sucesso! Faça o login para entrar.');
-      navigate('/');
+      setModal({
+        isOpen: true,
+        type: 'success',
+        title: 'Conta criada!',
+        message: 'Seu cadastro foi realizado com sucesso. Faça o login para começar a usar o MoneyKeep.',
+      });
     } catch (err) {
       if (err.response?.data?.error) {
         setError(err.response.data.error);
       } else {
-        setError('Erro ao criar conta. Tente novamente.');
+        setModal({
+          isOpen: true,
+          type: 'error',
+          title: 'Erro ao cadastrar',
+          message: 'Não foi possível criar sua conta. Verifique os dados e tente novamente.',
+        });
       }
+    }
+  };
+
+  const handleModalClose = () => {
+    if (modal.type === 'success') {
+      navigate('/');
+    } else {
+      setModal((m) => ({ ...m, isOpen: false }));
     }
   };
 
@@ -95,6 +115,14 @@ const Cadastro = () => {
         </div>
 
       </div>
+
+      <FeedbackModal
+        isOpen={modal.isOpen}
+        type={modal.type}
+        title={modal.title}
+        message={modal.message}
+        onConfirm={handleModalClose}
+      />
     </div>
   );
 };

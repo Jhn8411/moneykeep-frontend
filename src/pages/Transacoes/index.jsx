@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { FiBell, FiMenu, FiUser } from 'react-icons/fi';
+import { FiBell, FiMenu, FiUser, FiRepeat } from 'react-icons/fi';
 import api from '../../services/api';
 import { formatCurrency } from '../../utils/formatters';
+import FeedbackModal from '../../components/FeedbackModal';
 import './Transacoes.css';
 
 const Transacoes = () => {
-  const [type, setType]             = useState('expense');
-  const [amount, setAmount]         = useState('');
-  const [date, setDate]             = useState('');
-  const [categoryId, setCategoryId] = useState('');
+  const [type, setType]               = useState('expense');
+  const [amount, setAmount]           = useState('');
+  const [date, setDate]               = useState('');
+  const [categoryId, setCategoryId]   = useState('');
   const [description, setDescription] = useState('');
+  const [isRecurring, setIsRecurring] = useState(false);
 
   const [categories, setCategories] = useState([]);
   const [summary, setSummary]       = useState({ totalBalance: 0, monthIncome: 0, monthExpense: 0 });
   const [loading, setLoading]       = useState(true);
+
+  const [modal, setModal] = useState({ isOpen: false, type: 'success', title: '', message: '' });
 
   const { toggleMenu } = useOutletContext();
   const user = JSON.parse(localStorage.getItem('@MoneyKeep:user') || '{}');
@@ -37,12 +41,27 @@ const Transacoes = () => {
 
   useEffect(() => { fetchData(); }, []);
 
+  // Ao trocar para Ganho, desmarca recorrente
+  const handleTypeChange = (newType) => {
+    setType(newType);
+    if (newType === 'income') setIsRecurring(false);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!amount || !date || (type === 'expense' && !categoryId)) {
-      alert('Por favor, preencha todos os campos obrigatórios.');
+      setModal({
+        isOpen: true, type: 'warning',
+        title: 'Campos obrigatórios',
+        message: 'Por favor, preencha todos os campos obrigatórios antes de continuar.',
+      });
       return;
     }
+
+    // Se recorrente, garante que a data foi preenchida (já validada acima)
+    // O dia de vencimento é extraído da data pelo backend
+
     try {
       await api.post('/transactions', {
         type,
@@ -50,16 +69,35 @@ const Transacoes = () => {
         transaction_date: date,
         category_id: type === 'expense' ? categoryId : null,
         description,
+        is_recurring: type === 'expense' ? isRecurring : false,
       });
-      alert('Transação adicionada com sucesso!');
+
+      // Extrair dia da data para exibir na mensagem de sucesso
+      const day = date ? parseInt(date.split('-')[2], 10) : null;
+
+      setModal({
+        isOpen: true, type: 'success',
+        title: 'Transação adicionada!',
+        message: isRecurring && day
+          ? `Despesa registrada com recorrência mensal todo dia ${day}.`
+          : `Sua ${type === 'expense' ? 'despesa' : 'receita'} foi registrada com sucesso.`,
+      });
+
       setAmount('');
       setDescription('');
+      setIsRecurring(false);
       fetchData();
     } catch (error) {
       console.error('Erro ao criar transação:', error);
-      alert('Ocorreu um erro ao guardar a transação.');
+      setModal({
+        isOpen: true, type: 'error',
+        title: 'Erro ao registrar',
+        message: error.response?.data?.error || 'Ocorreu um erro ao guardar a transação. Tente novamente.',
+      });
     }
   };
+
+  const closeModal = () => setModal((m) => ({ ...m, isOpen: false }));
 
   if (loading) return <h2 style={{ padding: '32px', color: 'var(--color-primary)' }}>A carregar...</h2>;
 
@@ -78,10 +116,7 @@ const Transacoes = () => {
         </div>
       </header>
 
-      {/* ── CONTEÚDO ── */}
       <div className="transacoes-body">
-
-        {/* Grid: formulário + resumo */}
         <div className="transacoes-grid">
 
           {/* ── Formulário ── */}
@@ -99,14 +134,14 @@ const Transacoes = () => {
                   <button
                     type="button"
                     className={`toggle-btn ${type === 'expense' ? 'active-expense' : ''}`}
-                    onClick={() => setType('expense')}
+                    onClick={() => handleTypeChange('expense')}
                   >
                     Despesa
                   </button>
                   <button
                     type="button"
                     className={`toggle-btn ${type === 'income' ? 'active-income' : ''}`}
-                    onClick={() => setType('income')}
+                    onClick={() => handleTypeChange('income')}
                   >
                     Ganho
                   </button>
@@ -168,6 +203,32 @@ const Transacoes = () => {
                   />
                 </div>
 
+                {/* ── Pill de Recorrência — só para Despesa ── */}
+                {type === 'expense' && (
+                  <div className="recurring-pill-wrapper">
+                    <button
+                      type="button"
+                      className={`recurring-pill ${isRecurring ? 'recurring-pill--active' : ''}`}
+                      onClick={() => setIsRecurring(!isRecurring)}
+                    >
+                      <FiRepeat size={14} />
+                      Recorrência mensal
+                    </button>
+
+                    {/* Dica exibida apenas quando ativo */}
+                    {isRecurring && date && (
+                      <span className="recurring-hint">
+                        Esta despesa se repetirá todo dia {parseInt(date.split('-')[2], 10)} de cada mês.
+                      </span>
+                    )}
+                    {isRecurring && !date && (
+                      <span className="recurring-hint recurring-hint--warn">
+                        Preencha a data para definir o dia de vencimento.
+                      </span>
+                    )}
+                  </div>
+                )}
+
                 <button type="submit" className="btn-submit">
                   Adicionar Transação
                 </button>
@@ -179,17 +240,14 @@ const Transacoes = () => {
           {/* ── Resumo ── */}
           <div className="summary-side-card">
             <h3>Resumo</h3>
-
             <div className="summary-block">
               <span>Saldo atual</span>
               <strong>{formatCurrency(summary.totalBalance)}</strong>
             </div>
-
             <div className="summary-block">
               <span>Ganhos do mês</span>
               <strong className="income-value">{formatCurrency(summary.monthIncome)}</strong>
             </div>
-
             <div className="summary-block">
               <span>Despesas do mês</span>
               <strong className="expense-value">{formatCurrency(summary.monthExpense)}</strong>
@@ -202,9 +260,7 @@ const Transacoes = () => {
         <div className="reminder-section">
           <h3>Lembrete</h3>
           <div className="reminder-card">
-            <div className="reminder-icon">
-              <FiBell size={22} />
-            </div>
+            <div className="reminder-icon"><FiBell size={22} /></div>
             <span className="reminder-text">
               Mantenha o hábito de registar as suas transações diariamente para ter um controlo financeiro mais preciso!
             </span>
@@ -212,6 +268,14 @@ const Transacoes = () => {
         </div>
 
       </div>
+
+      <FeedbackModal
+        isOpen={modal.isOpen}
+        type={modal.type}
+        title={modal.title}
+        message={modal.message}
+        onConfirm={closeModal}
+      />
     </div>
   );
 };

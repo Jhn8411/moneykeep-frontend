@@ -4,10 +4,11 @@ import { useOutletContext } from 'react-router-dom';
 import { FiUser, FiLock, FiGlobe, FiMenu } from 'react-icons/fi';
 import { FiUser as FiUserAvatar } from 'react-icons/fi';
 import api from '../../services/api';
+import FeedbackModal from '../../components/FeedbackModal';
 import './Configuracoes.css';
 
 const Configuracoes = () => {
-  const navigate   = useNavigate();
+  const navigate       = useNavigate();
   const { toggleMenu } = useOutletContext();
 
   const user  = JSON.parse(localStorage.getItem('@MoneyKeep:user') || '{}');
@@ -16,6 +17,18 @@ const Configuracoes = () => {
   const [name, setName]   = useState(user.name  || '');
   const [email, setEmail] = useState(user.email || '');
 
+  // Estado unificado do modal
+  const [modal, setModal] = useState({
+    isOpen:  false,
+    type:    'success',
+    title:   '',
+    message: '',
+    mode:    'feedback', // 'feedback' | 'confirm-delete'
+  });
+
+  const closeModal = () => setModal((m) => ({ ...m, isOpen: false }));
+
+  /* ── Salvar perfil ── */
   const handleSaveProfile = async (e) => {
     e.preventDefault();
     try {
@@ -26,31 +39,73 @@ const Configuracoes = () => {
       );
       const updatedUser = { ...user, name: response.data.name };
       localStorage.setItem('@MoneyKeep:user', JSON.stringify(updatedUser));
-      alert('Perfil atualizado com sucesso!');
-      window.location.reload();
+      setModal({
+        isOpen:  true,
+        type:    'success',
+        title:   'Perfil atualizado!',
+        message: 'Suas informações foram salvas com sucesso.',
+        mode:    'feedback',
+      });
     } catch (error) {
       console.error('Erro ao atualizar perfil:', error);
-      alert('Ocorreu um erro ao atualizar o seu perfil.');
+      setModal({
+        isOpen:  true,
+        type:    'error',
+        title:   'Erro ao salvar',
+        message: 'Ocorreu um erro ao atualizar o seu perfil. Tente novamente.',
+        mode:    'feedback',
+      });
     }
   };
 
-  const handleDeleteAccount = async () => {
-    const confirmed = window.confirm(
-      'Tem certeza absoluta? Todos os seus dados financeiros serão perdidos para sempre.'
-    );
-    if (!confirmed) return;
+  /* ── Abre confirmação de exclusão ── */
+  const handleDeleteAccount = () => {
+    setModal({
+      isOpen:  true,
+      type:    'confirm',
+      title:   'Excluir conta?',
+      message: 'Tem certeza absoluta? Todo o seu histórico de transações será apagado permanentemente. Esta ação não pode ser desfeita.',
+      mode:    'confirm-delete',
+    });
+  };
 
+  /* ── Confirma a exclusão após o modal ── */
+  const handleConfirmDelete = async () => {
+    closeModal();
     try {
       await api.delete('/users', {
         headers: { Authorization: `Bearer ${token}` },
       });
       localStorage.removeItem('@MoneyKeep:token');
       localStorage.removeItem('@MoneyKeep:user');
-      alert('Sua conta foi excluída com sucesso. Sentiremos sua falta!');
-      navigate('/');
+      setModal({
+        isOpen:  true,
+        type:    'success',
+        title:   'Conta excluída',
+        message: 'Sua conta foi removida com sucesso. Sentiremos sua falta!',
+        mode:    'feedback-exit',
+      });
     } catch (error) {
       console.error('Erro ao excluir conta:', error);
-      alert('Ocorreu um erro ao excluir sua conta.');
+      setModal({
+        isOpen:  true,
+        type:    'error',
+        title:   'Erro ao excluir',
+        message: 'Ocorreu um erro ao excluir sua conta. Tente novamente.',
+        mode:    'feedback',
+      });
+    }
+  };
+
+  /* ── Decide o que fazer ao confirmar o modal ── */
+  const handleModalConfirm = () => {
+    if (modal.mode === 'confirm-delete') {
+      handleConfirmDelete();
+    } else if (modal.mode === 'feedback-exit') {
+      navigate('/');
+    } else {
+      closeModal();
+      if (modal.type === 'success') window.location.reload();
     }
   };
 
@@ -155,6 +210,18 @@ const Configuracoes = () => {
         </section>
 
       </div>
+
+      {/* ── Modal de feedback e confirmação ── */}
+      <FeedbackModal
+        isOpen={modal.isOpen}
+        type={modal.type}
+        title={modal.title}
+        message={modal.message}
+        onConfirm={handleModalConfirm}
+        onCancel={closeModal}
+        confirmText={modal.mode === 'confirm-delete' ? 'Sim, excluir' : undefined}
+      />
+
     </div>
   );
 };
