@@ -15,7 +15,7 @@ const Aprendizado = () => {
   useEffect(() => {
     const fetchContents = async () => {
       try {
-        const response = await api.get('/contents');
+        const response = await api.get('/api/contents');
         setGroupedContents(response.data);
       } catch (error) {
         console.error('Erro ao carregar conteúdos:', error);

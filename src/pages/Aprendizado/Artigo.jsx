@@ -15,7 +15,7 @@ const Artigo = () => {
   useEffect(() => {
     const fetchArtigo = async () => {
       try {
-        const response = await api.get(`/contents/${id}`);
+        const response = await api.get(`/api/contents/${id}`);
         setArtigo(response.data);
       } catch (err) {
         console.error('Erro ao carregar artigo:', err);
